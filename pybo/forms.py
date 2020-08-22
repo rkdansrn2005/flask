@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 
-from wtforms import StringField, TextAreaField, PasswordField
+from wtforms import StringField, TextAreaField, PasswordField, IntegerField
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired, Length, EqualTo, Email
 
@@ -33,3 +33,12 @@ class UserLoginForm(FlaskForm):
 
 class CommentForm(FlaskForm):
     content = TextAreaField('내용', validators=[DataRequired()])
+
+class Profilemodi(FlaskForm):
+    email = EmailField('이메일', [DataRequired(), Email("이메일 양식을 지켜주세요")])
+    real_name = StringField('실명', validators=[DataRequired(), Length(min=3, max=25)])
+    age = IntegerField('나이', validators=[DataRequired()])
+    address = StringField('주소', validators=[DataRequired(), Length(min=3, max=25)])
+    hoby = TextAreaField('취미', validators=[DataRequired('내용은 필수입력 항목입니다.')])
+    introduce = TextAreaField('자기소개', validators=[DataRequired('내용은 필수입력 항목입니다.')])
+    cellphone = StringField('휴대폰 번호', validators=[DataRequired(), Length(min=3, max=25)])

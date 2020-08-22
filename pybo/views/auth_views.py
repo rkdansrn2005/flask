@@ -7,8 +7,10 @@ from pybo import db
 
 from pybo.forms import UserCreateForm, UserLoginForm
 
-from pybo.models import User
+from ..forms import Profilemodi
 
+from pybo.models import User, Myprofile
+from datetime import datetime
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 import functools
@@ -22,8 +24,22 @@ def signup():
             user = User(username=form.username.data,
                         password=generate_password_hash(form.password1.data),
                         email=form.email.data)
-            db.session.add(user)
-            db.session.commit()
+            try:
+                db.session.add(user)
+                db.session.commit()
+
+                myprofile = Myprofile(username=user.username, email=form.email.data,
+                                  # real_name=None, age='1',
+                                  # address=None, hoby=None,
+                                  # introduce=None, cellphone=None,
+                                  modify_date = datetime.now()
+                                  )
+                db.session.add(myprofile)
+                db.session.commit()
+            except:
+                db.session.rollback()
+                flash('가입 실패')
+
             return redirect(url_for('main.index'))
         else:
             flash('이미 존재하는 사용자입니다.')
@@ -74,3 +90,30 @@ def login_required(view):
             return redirect(url_for('auth.login'))
         return view(**kwargs)
     return wrapped_view
+
+
+@bp.route('/profilemodify/<gg>', methods=(['GET', 'POST']))
+@login_required
+def profilemodify(gg):
+    form = Profilemodi()
+    if g.user:
+        if request.method == 'POST' and form.validate_on_submit():
+            user = Myprofile.query.filter_by(username=gg).first()
+
+            user.email = form.email.data
+            user.real_name = form.real_name.data
+            user.age = form.age.data
+            user.address = form.address.data
+            user.hoby = form.hoby.data
+
+            user.introduce = form.introduce.data
+            user.cellphone = form.cellphone.data
+            user.modify_date = datetime.now()
+            db.session.commit()
+            return redirect(url_for('main.index'))
+        else:
+            return render_template('auth/profile.html', form=form)
+    else:
+        flash("권한이 없습니다.")
+
+    return redirect(url_for('question._list'))

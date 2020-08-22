@@ -1,6 +1,10 @@
-from flask import Blueprint, render_template,  url_for
+from flask import Blueprint, render_template,  url_for, request, g, flash
 from werkzeug.utils import redirect
-from pybo.models import Question
+from ..forms import Profilemodi
+from .auth_views import login_required
+from pybo.models import User, Myprofile
+from pybo import db
+from datetime import datetime
 
 bp = Blueprint('main', __name__, url_prefix='/')
 
@@ -12,4 +16,7 @@ def hello_pybo():
 @bp.route('/')
 def index():
     return redirect(url_for('question._list')) # question_view의 list 함수로 이동
+
+
+
 

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container my-3">
+    <form method="post" class="post-form">
+        {{ form.csrf_token }}
+        {% include "form_errors.html" %}
+
+        <div class="form-group">
+            <label for="email">이메일</label>
+            <input type="text" class="form-control" name="email" id="email"
+                   value="{{ form.email.data or '' }}">
+        </div>
+        
+        <div class="form-group">
+            <label for="real_name">실명</label>
+            <input type="text" class="form-control" name="real_name" id="real_name"
+                   value="{{ form.real_name.data or '' }}">
+        </div>
+        
+        <div class="form-group">
+            <label for="age">나이</label>
+            <input type="number" class="form-control" name="age" id="age"
+                   value="{{ form.age.data or '' }}">
+        
+        <div class="form-group">
+            <label for="address">주소</label>
+            <input type="text" class="form-control" name="address" id="address"
+                   value="{{ form.address.data or '' }}">
+        </div>
+        
+        <div class="form-group">
+            <label for="hoby">취미</label>
+            <input type="text" class="form-control" name="hoby" id="hoby"
+                   value="{{ form.hoby.data or '' }}">
+        </div>
+
+        <div class="form-group">
+            <label for="introduce">자기소개</label>
+            <input type="text" class="form-control" name="introduce" id="introduce"
+                   value="{{ form.introduce.data or '' }}">
+        </div>
+
+        <div class="form-group">
+            <label for="cellphone">휴대폰 번호</label>
+            <input type="text" class="form-control" name="cellphone" id="cellphone"
+                   value="{{ form.cellphone.data or '' }}">
+        </div>
+
+        <button type="submit" class="btn btn-primary">수정하기</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-
+<p1><strong>제 1 게시판</strong></p1>
 <div class="container my-3">
 
 <!-- flask로 오류 발생시 생성 -->
@@ -11,11 +11,12 @@
     {% endfor %}
 
     <h2 class="border-bottom py-2">{{ question.subject }}</h2>
+    <h4>조회수 : {{ question.look}} </h4>
     <!-- 추천인 영역 -->
     <div class="row my-3">
         <div class="col-1"> <!-- 추천영역 -->
             <div class="bg-light text-center p-3 border font-weight-bolder mb-1">{{ question.voter|length }}</div>
-            <a href="#" data-uri="{{ url_for('vote.question', question_id=question.id) }}"
+            <a href="#" data-uri="{{ url_for('vote.question', question_id=question.id, x=x) }}"
                class="recommend btn btn-sm btn-secondary btn-block my-1">추천</a>
         </div>
         <div class="col-11"> <!-- 질문영역 -->
@@ -23,7 +24,7 @@
     <!-- 질문의 본문 -->
     <div class="card">
         <div class="card-body">
-            <div class="card-text">{{ question.content|markdown }}</div>
+            <div class="card-text">{{ question.content|markdown }} </div>
             <div class="d-flex justify-content-end">
                 <!-- 수정일자 -->
                 
@@ -44,10 +45,10 @@
             <!-- 수정과 삭제 -->
                {% if g.user == question.user %}
                <div class="my-3">
-                <a href="{{ url_for('question.modify', question_id=question.id) }}"
+                <a href="{{ url_for('question.modify', question_id=question.id, x=x) }}"
                class="btn btn-sm btn-outline-secondary">수정</a>
 
-                 <a href="#" class="delete btn btn-sm btn-outline-secondary" data-uri="{{ url_for('question.delete', question_id=question.id) }}">삭제</a>
+                 <a href="#" class="delete btn btn-sm btn-outline-secondary" data-uri="{{ url_for('question.delete', question_id=question.id, x=x) }}">삭제</a>
                 </div>
             {% endif %}
 
@@ -66,9 +67,9 @@
                     </span>
                     <!-- 수정, 삭제 -->
                     {% if g.user == comment.user %}
-                    <a href="{{ url_for('comment.modify_question', comment_id=comment.id) }}" class="small">수정</a>,
+                    <a href="{{ url_for('comment.modify_question', comment_id=comment.id ,x=x) }}" class="small">수정</a>,
                     <a href="#" class="small delete"
-                       data-uri="{{ url_for('comment.delete_question', comment_id=comment.id) }}">삭제</a>
+                       data-uri="{{ url_for('comment.delete_question', comment_id=comment.id,x=x) }}">삭제</a>
                     {% endif %}
                 </div>
             {% endfor %}
@@ -76,7 +77,7 @@
             {% endif %}
             
             <div>
-                <a href="{{ url_for('comment.create_question', question_id=question.id) }}"
+                <a href="{{ url_for('comment.create_question', question_id=question.id,x=x) }}"
                    class="small"><small>댓글 추가 ..</small></a>
             </div>
 
@@ -93,7 +94,7 @@
     <div class="row my-3">
     <div class="col-1">  <!-- 추천영역 -->
         <div class="bg-light text-center p-3 border font-weight-bolder mb-1">{{ answer.voter|length }}</div>
-        <a href="#" data-uri="{{ url_for('vote.answer', answer_id=answer.id) }}"
+        <a href="#" data-uri="{{ url_for('vote.answer', answer_id=answer.id, x=x) }}"
             class="recommend btn btn-sm btn-secondary btn-block my-1">추천</a>
     </div>
     <div class="col-11">
@@ -122,10 +123,10 @@
             </div>
             {% if g.user == answer.user %}
             <div class="my-3">
-            <a href="{{ url_for('answer.modify', answer_id=answer.id) }}"
+            <a href="{{ url_for('answer.modify', answer_id=answer.id,x=x) }}"
                 class="btn btn-sm btn-outline-secondary">수정</a>
             <a href="#" class="delete btn btn-sm btn-outline-secondary "
-                data-uri="{{ url_for('answer.delete', answer_id=answer.id) }}">삭제</a>
+                data-uri="{{ url_for('answer.delete', answer_id=answer.id,x=x) }}">삭제</a>
             </div>
         {% endif %}
 
@@ -143,16 +144,16 @@
                         {% endif %}
                     </span>
                     {% if g.user == comment.user %}
-                    <a href="{{ url_for('comment.modify_answer', comment_id=comment.id) }}" class="small">수정</a>,
+                    <a href="{{ url_for('comment.modify_answer', comment_id=comment.id,x=x) }}" class="small">수정</a>,
                     <a href="#" class="small delete"
-                       data-uri="{{ url_for('comment.delete_answer', comment_id=comment.id) }}">삭제</a>
+                       data-uri="{{ url_for('comment.delete_answer', comment_id=comment.id,x=x) }}">삭제</a>
                     {% endif %}
                 </div>
             {% endfor %}
             </div>
             {% endif %}
             <div>
-                <a href="{{ url_for('comment.create_answer', answer_id=answer.id) }}"
+                <a href="{{ url_for('comment.create_answer', answer_id=answer.id,x=x) }}"
                    class="small"><small>댓글 추가 ..</small></a>
             </div>
 
@@ -165,7 +166,7 @@
     {% endfor %}
 
    
-    <form action="{{ url_for('answer.create', question_id=question.id) }}" method="post" class="my-3">
+    <form action="{{ url_for('answer.create', question_id=question.id , x=x) }}" method="post" class="my-3">
         <!--  [edit]  -->
         {{ form.csrf_token }}
         <!-- 오류표시 Start -->

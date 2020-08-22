@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-<!-- ---------------------------------------- [edit] ---------------------------------------- -->
+
+<p1><strong>제 2 게시판</strong></p1>
+
 <div class="container my-3">
 
 	<div class="row justify-content-end my-3">
@@ -44,9 +46,9 @@
             <td>{{ question_list.total - ((question_list.page-1) * question_list.per_page) - loop.index0 }}</td>
 
             <td class="text-left">
-                <a href="{{ url_for('question.detail', question_id=question.id) }}">{{ question.subject }}</a>
-                {% if question.answer_set|length > 0 %}
-                <span class="text-danger small ml-2">{{ question.answer_set|length }}</span>
+                <a href="{{ url_for('question.detail1', question_id=question.id) }}">{{ question.subject }}</a>
+                {% if question.answer_set1|length > 0 %}
+                <span class="text-danger small ml-2">{{ question.answer_set1|length }}</span>
                 {% endif %}
             </td>
             <td>{{ question.user.username }}</td>
@@ -123,10 +125,15 @@
         </li>
         {% endif %}
     </ul>
-    <a href="{{ url_for('question.create') }}" class="btn btn-primary">질문 등록하기</a>
+    {% if a %}
+    <a href="{{ url_for('question.create', x=x) }}" class="btn btn-primary">질문 등록하기</a>
+{% else %}
+  <a href="{{ url_for('question.create' , x=x) }}" class="btn btn-primary">질문 등록하기</a>
+{% endif %}
 </div>
 
-<form id="searchForm" method="get" action="{{ url_for('question._list') }}">
+
+<form id="searchForm" method="get" action="{{ url_for('question._list1') }}">
     <input type="hidden" id="kw" name="kw" value="{{ kw or '' }}">
     <input type="hidden" id="page" name="page" value="{{ page }}">
     <input type="hidden" id="so" name="so" value="{{ so }}">

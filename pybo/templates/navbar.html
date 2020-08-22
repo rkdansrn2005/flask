@@ -13,6 +13,11 @@
                 <a class="nav-link" href="{{ url_for('auth.logout') }}">{{ g.user.username }} (로그아웃)</a>
             </li>
         </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item ">
+                <a class="nav-link" href="{{ url_for('auth.profilemodify', gg=g.user.username) }}">{{ g.user.username }}의 프로필 수정</a>
+            </li>
+        </ul>
         {% else %}
         <!-- authviews에 현재 아이디가 없다면  -->
         <ul class="navbar-nav">
@@ -22,9 +27,23 @@
             <li class="nav-item ">
                 <a class="nav-link" href="{{ url_for('auth.signup') }}">계정생성</a>
             </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="#">비밀번호 새로 만들기</a>
+            </li>
+
+
         </ul>
         <!--  [edit]  -->
         {% endif %}
         <!--  -->
+        <ul class="navbar-nav">
+        <li class="nav-item ">
+                <a class="nav-link" href="{{ url_for('question._list') }}">제 1 게시판</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="{{ url_for('question._list1') }}">제 2 게시판</a>
+            </li>
+            </ul>
     </div>
 </nav>
+
