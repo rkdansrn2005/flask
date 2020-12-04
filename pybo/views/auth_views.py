@@ -27,20 +27,13 @@ def signup():
             try:
                 db.session.add(user)
                 db.session.commit()
+                return redirect(url_for('main.registerclear'))
 
-                myprofile = Myprofile(username=user.username, email=form.email.data,
-                                  # real_name=None, age='1',
-                                  # address=None, hoby=None,
-                                  # introduce=None, cellphone=None,
-                                  modify_date = datetime.now()
-                                  )
-                db.session.add(myprofile)
-                db.session.commit()
             except:
                 db.session.rollback()
-                flash('가입 실패')
+                flash('가입 실패- 이메일을 확인해주세요')
 
-            return redirect(url_for('main.index'))
+            return redirect(url_for('main.registerclear'))
         else:
             flash('이미 존재하는 사용자입니다.')
     return render_template('auth/signup.html', form=form)
@@ -91,7 +84,7 @@ def login_required(view):
         return view(**kwargs)
     return wrapped_view
 
-
+#
 @bp.route('/profilemodify/<gg>', methods=(['GET', 'POST']))
 @login_required
 def profilemodify(gg):
